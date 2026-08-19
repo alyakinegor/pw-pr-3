@@ -17,6 +17,7 @@ class PolzaProvider:
         self.model = (model or os.getenv('POLZA_MODEL'))
         self.language = (language or os.getenv('POLZA_LANGUAGE'))
         self.timeout_seconds = timeout_seconds
+    
     def transcribe(self, audio: bytes) -> str:
         if not self.api_key:
             raise PolzaError('Не настроен POLZA_API_KEY')
@@ -32,14 +33,15 @@ class PolzaProvider:
             
         try:
             response = httpx.post(f'{self.base_url}/audio/transcriptions',
-                                  headers={'Authorization:' f'Bearer {self.api_key}'},
+                                  headers={'Authorization': f'Bearer {self.api_key}'},
                                   json=payload,
                                   timeout=self.timeout_seconds)
             
         except httpx.TimeoutException as exc:
             raise PolzaError('Polza.ai не ответил за отведенное время.')
         except httpx.HTTPError as exc:
-            raise PolzaError('Не удалось подключиться к Polza,ai')
+            print(exc)
+            raise PolzaError('Не удалось подключиться к Polza.ai')
         
         if not response.is_success:
             raise PolzaError('Ответ не в том формате')

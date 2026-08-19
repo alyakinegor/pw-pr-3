@@ -10,7 +10,7 @@ def create_app(provider: PolzaProvider | None = None) -> Flask:
     
     app.config.from_mapping(
         MAX_CONTENT_LENGTH=MAX_AUDIO_BYTES + REQUEST_OVERHEAD_BYTES,
-        TRANSCRIBTION_PROVIDER=(provider if provider is not None else PolzaProvider)
+        TRANSCRIBTION_PROVIDER=(provider if provider is not None else PolzaProvider())
     )
     
     app.register_blueprint(bp)

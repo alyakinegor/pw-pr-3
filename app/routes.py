@@ -39,7 +39,8 @@ def transcribe_audio():
     try:
         text = provider.transcribe(audio=audio)
     except PolzaError as exc:
-        return jsonify(error='Ошибка в конфигурации провайдера.'), 502
+        # print(exc)
+        return jsonify(error=f'Ошибка в конфигурации провайдера. {exc}'), 502
     
     return jsonify(text=text)
 
