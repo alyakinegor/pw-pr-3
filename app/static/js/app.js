@@ -23,6 +23,14 @@ fileInput.addEventListener('change', () => {
 
 });
 
+upSend.addEventListener('click', () => {
+    sendFile(uploadedFile);
+})
+
+upDelete.addEventListener('click', () => {
+    
+});
+
 function sendFile(file){
     const formData = new FormData();
     formData.append('audio', file);
